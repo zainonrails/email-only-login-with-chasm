@@ -20,6 +20,8 @@ This app creates a simple service to call the API to send a magic link to the us
 You need your API key to make the request and pass the recipient email to send the sign in link.
 
 ```ruby
+    # API call
+    
     url = URI("http://api.getchasm.com/v1/links")
 
     https = Net::HTTP.new(url.host, url.port)
@@ -30,6 +32,13 @@ You need your API key to make the request and pass the recipient email to send t
     request.set_form form_data, 'multipart/form-data'
     response = https.request(request)
     response.read_body
+    
+    # Response
+    
+    {
+        secret: 'bb9c185e3ab9c3671cb30e9192bd9ceb',
+        message: 'Sign in link was successfully sent.'
+    }
 ```
 
 You can use httparty or any other gem to make your calls as well.
@@ -46,12 +55,16 @@ You can use httparty or any other gem to make your calls as well.
 
 This URL consist of a JWT token that can be decoded using JWT lib for relevant language. 
 
-Chasm uses '**HS256**' algorithm and your **OTP secret** to encode the token.
+Chasm uses '**HS256**' algorithm and your **OTP Secret** to encode the token that you will find in your dashboard.
 
 You can decode using the same secret and algorithm. For more info about JWT visit [jwt.io](https://jwt.io)
 
 ```ruby
+# decoding JWT in ruby
+
 payload = JWT.decode(params[:secret], ENV['CHASM_OTP_SECRET'], 'HS256')[0]
+
+# payload
 {
   verified: true,
   email: 'random@email.com',
