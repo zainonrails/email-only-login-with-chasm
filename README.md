@@ -13,7 +13,14 @@ Build a passwordless authentication flow using Chasm's API in a Rails App.
 
 ### Synopsis
 
-This app creates a simple service to call the API to send a magic link to the user via email. Chasm will handle creating, emailing the link and verifying the link. Once the user clicks the link, Chasm will verify it and redirect user to your set callback URL (webhook) along with a JWT token containing payload. On receiving the payload, the app decodes it using `HS256` algorithm and `OTP secret` (from Chasm's Dashboard) and matching the payload with our stored user inf, if it matches then it means the user has been verified and can be given access to the app.
+This app creates a simple service to call the API to send a magic link to the user via email. 
+Chasm will handle 
+ - Creating the unique magic link for the user 
+ - Emailing the link with pre-defined email templates with custom params
+ - Verifying the link
+ - Redirect the user to your app
+ 
+Once the user clicks the link, Chasm will verify it and redirect user to your set callback URL (webhook) along with a JWT token containing payload. On receiving the payload, the app decodes it using `HS256` algorithm and `OTP secret` (from Chasm's Dashboard) and matching the payload with our stored user information, if it matches then it means the user has been verified and can be given access to the app.
 
 ### API call
 
@@ -71,6 +78,10 @@ payload = JWT.decode(params[:secret], ENV['CHASM_OTP_SECRET'], 'HS256')[0]
   secret: 'bb9c185e3ab9c3671cb30e9192bd9ceb'
 }
 ```
+
+For more information, please visit [getchasm.com](https://www.getchasm.com).
+
+Signup for an account [here.](https://app.getchasm.com), Try the API for free and let us know what you think.
 
 
 
